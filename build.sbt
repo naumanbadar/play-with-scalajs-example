@@ -9,6 +9,7 @@ lazy val server = (project in file("server")).settings(
   compile in Compile := ((compile in Compile) dependsOn scalaJSPipeline).value,
   libraryDependencies ++= Seq(
     "com.vmunier" %% "scalajs-scripts" % "1.0.0",
+    "com.lihaoyi" %% "upickle" % "0.4.3",
     specs2 % Test
   )
 ).enablePlugins(PlayScala).
@@ -19,7 +20,8 @@ lazy val client = (project in file("client")).settings(
   persistLauncher := true,
   persistLauncher in Test := false,
   libraryDependencies ++= Seq(
-    "be.doeraene" %%% "scalajs-jquery" % "0.9.1"
+    "be.doeraene" %%% "scalajs-jquery" % "0.9.1",
+    "com.lihaoyi" %%% "upickle" % "0.4.3"
   ),
   jsDependencies += "org.webjars" % "jquery" % "2.1.4" / "2.1.4/jquery.js"
 ).enablePlugins(ScalaJSPlugin, ScalaJSWeb).
@@ -27,9 +29,9 @@ lazy val client = (project in file("client")).settings(
 
 lazy val shared = (crossProject.crossType(CrossType.Pure) in file("shared")).
   settings(
-    scalaVersion := scalaV,
-    libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.0-M1").
-  jsConfigure(_ enablePlugins ScalaJSWeb)
+    scalaVersion := scalaV
+  )
+  .jsConfigure(_ enablePlugins ScalaJSWeb)
 
 lazy val sharedJvm = shared.jvm
 lazy val sharedJs = shared.js
