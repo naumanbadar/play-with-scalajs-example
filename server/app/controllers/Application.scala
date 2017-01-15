@@ -1,8 +1,9 @@
 package controllers
 
-import play.api.libs.json.Json
+import play.api.Logger
 import play.api.mvc._
 import shared.{Message, SharedMessages}
+import upickle.default._
 
 class Application extends Controller {
 
@@ -11,7 +12,8 @@ class Application extends Controller {
   }
 
   def getMessage = Action {
-    Ok(Json.toJson(Message("Good morning from the controller")))
+    Logger.logger.info("call from js")
+    Ok(write(Message("Good morning from the controller")))
   }
 
 }
