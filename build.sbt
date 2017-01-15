@@ -19,7 +19,6 @@ lazy val client = (project in file("client")).settings(
   persistLauncher := true,
   persistLauncher in Test := false,
   libraryDependencies ++= Seq(
-//    "org.scala-js" %%% "scalajs-dom" % "0.9.1"
     "be.doeraene" %%% "scalajs-jquery" % "0.9.1"
   ),
   jsDependencies += "org.webjars" % "jquery" % "2.1.4" / "2.1.4/jquery.js"
@@ -27,7 +26,9 @@ lazy val client = (project in file("client")).settings(
   dependsOn(sharedJs)
 
 lazy val shared = (crossProject.crossType(CrossType.Pure) in file("shared")).
-  settings(scalaVersion := scalaV).
+  settings(
+    scalaVersion := scalaV,
+    libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.0-M1").
   jsConfigure(_ enablePlugins ScalaJSWeb)
 
 lazy val sharedJvm = shared.jvm
